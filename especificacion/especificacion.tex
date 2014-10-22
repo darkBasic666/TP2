@@ -1,0 +1,192 @@
+% Clase y configuracion de tipo de documento
+\documentclass[10pt,a4paper,spanish]{article}
+% Inclusion de paquetes
+\usepackage{a4wide}
+\usepackage{amsmath, amscd, amssymb, amsthm, latexsym}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[width=15.5cm, left=3cm, top=2.5cm, height= 24.5cm]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{xspace}
+\usepackage{longtable}
+\usepackage{caratula}
+% incluye macros espec materia
+\include{algo1-cmds}
+
+% Encabezado
+\lhead{Algoritmos y Estructuras de Datos I}
+\rhead{Grupo 22}
+% Pie de pagina
+\renewcommand{\footrulewidth}{0.4pt}
+\lfoot{Facultad de Ciencias Exactas y Naturales}
+\rfoot{Universidad de Buenos Aires}
+
+\begin{document}
+
+% Datos de caratula
+\materia{Algoritmos y Estructuras de Datos I}
+\titulo{Trabajo Pr\'actico N\'umero 1}
+%\subtitulo{}
+\grupo{Grupo: 22}
+
+\integrante{Maximiliano Leon Paz}{251/14}{m4xileon@gmail.com}
+\integrante{Rosso, Sebasti\'an}{921/13}{sebi.rr@hotmail.com}
+\integrante{Mena, Manuel}{313/14}{manuelmena1993@gmail.com}
+
+\maketitle
+
+\newpage
+
+% Para crear un indice
+%\tableofcontents
+
+% Forzar salto de pagina
+\clearpage
+
+
+
+% Otro salto de pagina
+% \newpage
+
+\section{Problemas}
+
+	
+	\begin{ejercicio}
+	
+	Posiciones Más Oscuras:
+	
+		\begin{problema}{PosicionesMasOscuras}{i:Imangen}{res::\TLista{(\ent,\ent)}}
+			\asegura{mismos(res,masOscuras(i))}
+		\end{problema}
+	\end{ejercicio}
+
+	\begin{ejercicio}
+	
+	Top 10: 
+	
+		\begin{problema}{Top10}{g:Galeria}{res::\TLista{Imagen}}
+			\requiere[Al menos hayan 10]{\longitud{imagenes(g)}\geq 10}
+			\asegura[Tamaño]{\longitud{res} == 10}
+			\asegura[Top]{\forall{(i\leftarrow[0..9), mas \leftarrow[0..i)  ,menos \leftarrow [0.. \longitud{imagenes(g)}) ,res_{mas} \neq imagenes(g)_{menos})} 
+			\newline (res_i \leq res_{mas}) \land  (res_i \geq imagenes(g)_{mas}) }
+		\end{problema}
+	\end{ejercicio}
+
+	\begin{ejercicio}
+	
+	La Más Chiquita Con Punto Blanco:
+	
+		\begin{problema}{laMasChiquitaConPuntoBlanco}{g:Galeria}{res:Imagen}
+			\requiere[Imagen con un punto blanco]{\exists{(i \leftarrow imagenes(g))}
+			\newline tengaUnPuntoBlanco(i) }
+			\asegura[Pertenecia]{res \in lasMasChiquitas(\TLista{i|i \leftarrow imagenes(g) , 
+			\newline tengaUnPuntoBlanco(i)  }) }
+		\end{problema}
+	\end{ejercicio}
+	
+	\begin{ejercicio}
+		
+		Agregar imagen:
+		
+		\begin{problema}{agregarImagen}{g:Galeria, i:Imagen}{}
+			\requiere[Nueva imagen]{i \notin imagenes(g)}
+			\modifica{g}
+			\asegura[Un elemento mas]{\longitud{imagenes(g)} == \longitud{imagenes(pre(g))} + 1}
+			\asegura[Se agrega]{i \in imagenes(g)}
+			\asegura[Otras imagenes se mantienen]{imagenesAnterioresPertenecen(g)}
+			\asegura[0 votos]{votos(g, i) == 0}
+			\asegura[Otros votos se mantienen]{otrosVotosIguales(g, i)}
+		\end{problema}
+	\end{ejercicio}
+	
+	\begin{ejercicio}
+		
+		Votar:
+		
+		\begin{problema}{votar}{g:Galeria, i:Imagen}{}
+			\requiere[Pertenencia]{i \in imagenes(g)}
+			\modifica{g}
+			\asegura[Misma cantidad]{\longitud{imagenes(g)} == \longitud{imagenes(pre(g))}}
+			\asegura[Mismas imagenes]{mismasImagenes(g)}
+			\asegura[Un voto mas]{votos(g, i) == votos(pre(g), i) + 1}
+			\asegura[Otros votos se mantienen]{otrosVotosIguales(g, i)}
+		\end{problema}	
+	\end{ejercicio}
+	
+	\begin{ejercicio}
+		
+		Eliminar mas votada:
+		
+		\begin{problema}{eliminarMasVotada}{g:Galeria}{}
+			\requiere[Al menos una imagen]{\longitud{imagenes(g)} \geq 1}
+			\modifica{g}
+			\asegura[Se elimina una]{\longitud{imagenes(g)} == \longitud{imagenes(pre(g))} - 1}
+			\asegura[Elimina mas votada]{eliminaMasVotada(g)}
+		\end{problema}	
+	\end{ejercicio}		
+\section{Auxiliares}
+
+
+	
+%	\item \auxil{corte(i,j,n,m:\ent,img:\TLista{\TLista{(\ent,\ent,\ent)}}):\TLista{\TLista{(\ent,\ent,\ent)}}}{ armarImagen(\TLista{{img_x}_y | x \leftarrow [i*(\longitud{img} \ n) .. (i+1)*(\longitud{img} \ n)), y \leftarrow [j*(\longitud{img_0} \ m) .. (j+1)*(\longitud{img_0} \ m))},n,m)}
+		
+
+	
+%	\item \auxil{armarImagen(lPx:\TLista{(\ent,\ent,\ent)},n,m:\ent):\TLista{\TLista{(\ent,\ent,\ent)}}}{\TLista{armarFila(lPx,i,j,n,m)|i \leftarrow [0..n), j \leftarrow [0 .. m)}}
+	
+% (falta terminar: armarFila)	
+%	\item \auxil{armarFila(lPx: \TLista{(\ent,\ent,\ent)}):\TLista{(\ent,\ent,\ent)}}{
+
+\subsection{Comunes}
+\begin{itemize}
+	\item \auxil{masOscuras(i:Imangen) : \TLista{(\ent,\ent)} }{
+		\newline \TLista{(x,y)| x \leftarrow  [0..ancho(i)) , y \leftarrow [0 .. alto(i)) , \forall{(i \leftarrow  [0..ancho(i)) , j \leftarrow [0 .. alto(i))}
+		\newline blancura(color(x,y))  \leq blancura(color(i,j)) }
+	}
+	\item \auxil{blancura(p:Pixel) : \ent }{
+		red(p) + blue(p) + green(p)
+	}
+	
+	\item \auxil{otrosVotosIguales(g:Galeria, i:Imagen) : Bool}{
+		\newline (\forall img \leftarrow imagenes(g), img \neq i)votos(g, img) == votos(pre(g), img)
+	}
+\end{itemize}
+
+\subsection{Ejercicio 4}
+\begin{itemize}
+	\item \auxil{imagenesAnterioresPertenecen(g:Galeria) : Bool}{
+		\newline (\forall img \leftarrow imagenes(pre(g)))img \in imagenes(g)
+	}
+	
+	\item \auxil{votosAnterioresIguales(g:Galeria) : Bool}{
+		\newline (\forall i \leftarrow [0..\longitud{imagenes(pre(g))}))votos(g, imagenes(pre(g))_i) == votos(g, imagenes(g)_i)
+	}
+\end{itemize}
+
+\subsection{Ejercicio 5}
+\begin{itemize}
+	\item \auxil{mismasImagenes(g:Galeria) : Bool}{
+		\newline (\forall i \leftarrow [0..\longitud{imagenes(g)}))imagenes(pre(g))_i == imagenes(g)_i
+	}
+\end{itemize}
+	
+\subsection{Ejercicio 6}
+\begin{itemize}
+	\item \auxil{eliminarMasVotada(g:Galeria) : Bool}{
+		\newline (\exists img \leftarrow imagenes(pre(g)), masVotada(pre(g), img)) 
+		\newline mismos(imagenes(g), filtrarImagen(imagenes(pre(g)), img))
+	}		
+	
+	\item \auxil{masVotada(g:Galeria, img:Imagen) : Bool}{
+		\newline (\forall i \leftarrow imagenes(g)) votos(g, img) \geq votos(g, i)
+	}
+	
+	\item \auxil{filtrarImagen(lista:[Imagen], img:Imagen) : [Imagen]}{
+		[i | i \leftarrow lista, i \neq img]
+	}
+\end{itemize}	
+        
+\end{document}
