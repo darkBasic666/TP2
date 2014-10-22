@@ -70,7 +70,7 @@
 		\begin{problema}{Top10}{g:Galeria}{res::\TLista{Imagen}}
 			\requiere[Al menos hayan 10]{\longitud{imagenes(g)}\geq 10}
 			\asegura[Tamaño]{\longitud{res} == 10}
-			\asegura[Top]{\forall{(i\leftarrow[0..9), mas \leftarrow[0..i)  ,menos \leftarrow [0.. \longitud{imagenes(g)}) ,res_{mas} \neq imagenes(g)_{menos})} 
+			\asegura[Top]{\forall{(i\leftarrow[0 .. 9), mas \leftarrow[0 .. i)  ,menos \leftarrow [0 .. \longitud{imagenes(g)}) ,res_{mas} \neq imagenes(g)_{menos})} 
 			\newline (res_i \leq res_{mas}) \land  (res_i \geq imagenes(g)_{mas}) }
 		\end{problema}
 	\end{ejercicio}
@@ -83,10 +83,10 @@
 			\requiere[Imagen con un punto blanco]{\exists{(i \leftarrow imagenes(g))}
 			\newline tengaUnPuntoBlanco(i) }
 			\asegura[Pertenecia]{res \in lasMasChiquitas(\TLista{i|i \leftarrow imagenes(g) , 
-			\newline tengaUnPuntoBlanco(i)  }) }
+			\newline tengaUnPuntoBlanco(i) }) }
 		\end{problema}
 	\end{ejercicio}
-	
+
 	\begin{ejercicio}
 		
 		Agregar imagen:
@@ -127,6 +127,7 @@
 			\asegura[Elimina mas votada]{eliminaMasVotada(g)}
 		\end{problema}	
 	\end{ejercicio}		
+
 \section{Auxiliares}
 
 
@@ -149,10 +150,28 @@
 	\item \auxil{blancura(p:Pixel) : \ent }{
 		red(p) + blue(p) + green(p)
 	}
-	
-	\item \auxil{otrosVotosIguales(g:Galeria, i:Imagen) : Bool}{
-		\newline (\forall img \leftarrow imagenes(g), img \neq i)votos(g, img) == votos(pre(g), img)
+	\item \auxil{lasMasChiquitas(g:Galeria) : \TLista{Imagen} }{
+		%\newline 
+		\TLista{i|i \leftarrow imagenes(g), j \leftarrow imagenes(g), size(i) \leq size(j) }
 	}
+	\item \auxil{tengaUnPuntoBlanco(i:Imagen) : Bool }{
+		\newline \exists{(x \leftarrow  [0..ancho(i)) , y \leftarrow [0 .. alto(i))}blanco(color(i,x,y)) 
+		\newline \land \forall{(p\leftarrow pixelesAyacentes(i,x,y))} \neg blanco(p)
+	}
+	\item \auxil{blanco(p:Pixel) : Bool }{
+		red(p) + blue(p) + green(p) == 3 * 255
+	}
+	\item \auxil{size(i:Imagen) : \ent }{
+		ancho(i) + alto(i)
+	}
+	\item \auxil{pixelesAyacentes(img:Imagen,x,y:\ent) : \TLista{Pixel} }{
+		\newline \TLista{color(img,i,j)| i \leftarrow [x-1 .. x+1], j \leftarrow [y-1 .. y + 1] , 
+		\newline enRango(ancho(img),alto(img),1,i,j) \land (x \neq i) \land (y \neq j) }
+	}
+	\item \auxil{enRango(ancho,alto,r,x,y:\ent) : Bool}{
+		\newline (x - r  \geq 0) \land (x + r  \leq ancho - 1) \land (y - r  \geq 0) \land (y + r \leq alto -1 ) 
+	}
+	
 \end{itemize}
 
 \subsection{Ejercicio 4}
@@ -188,5 +207,7 @@
 		[i | i \leftarrow lista, i \neq img]
 	}
 \end{itemize}	
+
+
         
 \end{document}
